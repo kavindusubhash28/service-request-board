@@ -2,50 +2,22 @@ const mongoose = require("mongoose");
 
 const jobSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: [true, "Title is required"],
-      trim: true,
-    },
-    description: {
-      type: String,
-      required: [true, "Description is required"],
-      trim: true,
-    },
-    category: {
-      type: String,
-      trim: true,
-    },
-    location: {
-      type: String,
-      trim: true,
-    },
-    contactName: {
-      type: String,
-      trim: true,
-    },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    category: String,
+    location: String,
+    contactName: String,
     contactEmail: {
       type: String,
-      trim: true,
-      match: [
-        /^\S+@\S+\.\S+$/,
-        "Please provide a valid email address",
-      ],
+      match: /.+\@.+\..+/ // basic email validation
     },
     status: {
       type: String,
       enum: ["Open", "In Progress", "Closed"],
-      default: "Open",
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
+      default: "Open"
+    }
   },
-  {
-    collection: "jobRequests",
-    versionKey: false,
-  }
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Job", jobSchema);

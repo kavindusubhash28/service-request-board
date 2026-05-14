@@ -1,0 +1,56 @@
+const Job = require("../models/Job");
+
+const getJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find();
+
+    res.status(200).json(jobs);
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+};
+
+// POST /api/jobs
+const createJob = async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      category,
+      location,
+      contactName,
+      contactEmail
+    } = req.body;
+
+    // basic validation
+    if (!title || !description) {
+      return res.status(400).json({
+        message: "Title and description are required"
+      });
+    }
+
+    const job = await Job.create({
+      title,
+      description,
+      category,
+      location,
+      contactName,
+      contactEmail
+    });
+
+    res.status(201).json(job);
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+};
+
+module.exports = {
+  createJob,
+  getJobs
+};
