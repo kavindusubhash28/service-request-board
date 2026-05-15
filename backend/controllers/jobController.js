@@ -2,7 +2,20 @@ const Job = require("../models/Job");
 
 const getJobs = async (req, res) => {
   try {
-    const jobs = await Job.find();
+
+    const filter = {};
+
+    // filter by category
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+
+    // filter by status
+    if (req.query.status) {
+      filter.status = req.query.status;
+    }
+
+    const jobs = await Job.find(filter);
 
     res.status(200).json(jobs);
   } catch (error) {
