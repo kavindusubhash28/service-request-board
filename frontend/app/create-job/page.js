@@ -1,0 +1,165 @@
+"use client";
+
+import { useState } from "react";
+import API from "../../services/api";
+
+export default function CreateJob() {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    category: "",
+    location: "",
+    contactName: "",
+    contactEmail: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await API.post("/jobs", formData);
+
+      alert("Job created successfully!");
+
+      setFormData({
+        title: "",
+        description: "",
+        category: "",
+        location: "",
+        contactName: "",
+        contactEmail: ""
+      });
+    } catch (error) {
+      console.log(error);
+      alert("Error creating job");
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-gray-100 px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-md sm:p-8">
+        <div className="mb-6">
+          <p className="text-sm font-medium uppercase tracking-wide text-gray-500">
+            Service Request Board
+          </p>
+          <h1 className="mt-2 text-3xl font-bold text-gray-900">Create New Job</h1>
+          <p className="mt-2 text-gray-600">
+            Fill out the details below to submit a new service request.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="title" className="mb-2 block text-sm font-medium text-gray-700">
+              Title
+            </label>
+            <input
+              id="title"
+              type="text"
+              name="title"
+              placeholder="Title"
+              value={formData.title}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="description" className="mb-2 block text-sm font-medium text-gray-700">
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Description"
+              value={formData.description}
+              onChange={handleChange}
+              rows="5"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+              required
+            />
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="category" className="mb-2 block text-sm font-medium text-gray-700">
+                Category
+              </label>
+              <input
+                id="category"
+                type="text"
+                name="category"
+                placeholder="Category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="location" className="mb-2 block text-sm font-medium text-gray-700">
+                Location
+              </label>
+              <input
+                id="location"
+                type="text"
+                name="location"
+                placeholder="Location"
+                value={formData.location}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+              />
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="contactName" className="mb-2 block text-sm font-medium text-gray-700">
+                Contact Name
+              </label>
+              <input
+                id="contactName"
+                type="text"
+                name="contactName"
+                placeholder="Contact Name"
+                value={formData.contactName}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="contactEmail" className="mb-2 block text-sm font-medium text-gray-700">
+                Contact Email
+              </label>
+              <input
+                id="contactEmail"
+                type="email"
+                name="contactEmail"
+                placeholder="Contact Email"
+                value={formData.contactEmail}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="inline-flex w-full items-center justify-center rounded-lg bg-black px-6 py-3 font-medium text-white transition hover:bg-gray-800"
+          >
+            Create Job
+          </button>
+        </form>
+      </div>
+    </main>
+  );
+}
