@@ -34,43 +34,6 @@ const getJobById = async (req, res) => {
   }
 };
 
-const updateJobStatus = async (req, res) => {
-  try {
-
-    const { status } = req.body;
-
-    // allowed status values
-    const validStatuses = ["Open", "In Progress", "Closed"];
-
-    if (!validStatuses.includes(status)) {
-      return res.status(400).json({
-        message: "Invalid status value"
-      });
-    }
-
-    const updatedJob = await Job.findByIdAndUpdate(
-      req.params.id,
-      { status },
-      { new: true }
-    );
-
-    // if no job found
-    if (!updatedJob) {
-      return res.status(404).json({
-        message: "Job not found"
-      });
-    }
-
-    res.status(200).json(updatedJob);
-
-  } catch (error) {
-    res.status(500).json({
-      message: "Server error",
-      error: error.message
-    });
-  }
-};
-
 // POST /api/jobs
 const createJob = async (req, res) => {
   try {
@@ -108,9 +71,71 @@ const createJob = async (req, res) => {
   }
 };
 
+const updateJobStatus = async (req, res) => {
+  try {
+
+    const { status } = req.body;
+
+    // allowed status values
+    const validStatuses = ["Open", "In Progress", "Closed"];
+
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({
+        message: "Invalid status value"
+      });
+    }
+
+    const updatedJob = await Job.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    // if no job found
+    if (!updatedJob) {
+      return res.status(404).json({
+        message: "Job not found"
+      });
+    }
+
+    res.status(200).json(updatedJob);
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+};
+
+const deleteJob = async (req, res) => {
+  try {
+
+    const deletedJob = await Job.findByIdAndDelete(req.params.id);
+
+    // if no job found
+    if (!deletedJob) {
+      return res.status(404).json({
+        message: "Job not found"
+      });
+    }
+
+    res.status(200).json({
+      message: "Job deleted successfully"
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   createJob,
   getJobs,
   getJobById,
-  updateJobStatus
+  updateJobStatus,
+  deleteJob
 };
