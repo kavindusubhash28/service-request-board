@@ -1,14 +1,29 @@
 export default function JobCard({ job }) {
+  const getStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case "open":
+        return "bg-green-100 text-green-800";
+      case "inprogress":
+        return "bg-yellow-100 text-yellow-800";
+      case "close":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
   return (
-    <article className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-      <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
-      <p className="mt-2 line-clamp-4 text-sm text-gray-600">{job.description}</p>
-      <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
-        <span className="inline-block rounded bg-gray-100 px-2 py-1 text-xs">{job.priority ?? "General"}</span>
-        <span>{job.createdAt ? new Date(job.createdAt).toLocaleDateString() : ""}</span>
+    <article className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm cursor-pointer">
+      <div className="flex items-start justify-between mb-4">
+        <span className="text-xs text-gray-500 font-medium">{job.createdAt ? new Date(job.createdAt).toLocaleDateString() : ""}</span>
+        <span className={`inline-block rounded-full px-3 py-1 text-xs font-bold ${getStatusColor(job.status)}`}>
+          {job.status ?? "Open"}
+        </span>
       </div>
-      <a href={`/jobs/${job._id}`} className="text-blue-500 mt-3 inline-block">
-        View Details
+      <h3 className="text-lg font-bold text-gray-900 mb-2">{job.title}</h3>
+      <p className="line-clamp-3 text-sm text-gray-600">{job.description}</p>
+      <a href={`/jobs/${job._id}`} className="text-blue-600 mt-4 inline-block font-semibold text-sm">
+        View Details →
       </a>
     </article>
   );

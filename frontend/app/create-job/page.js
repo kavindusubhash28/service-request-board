@@ -43,121 +43,128 @@ export default function CreateJob() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-md sm:p-8">
-        <div className="mb-6">
-          <p className="text-sm font-medium uppercase tracking-wide text-gray-500">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-lg sm:p-8">
+        <div className="mb-8">
+          <p className="text-sm font-medium uppercase tracking-wide text-blue-600">
             Service Request Board
           </p>
-          <h1 className="mt-2 text-3xl font-bold text-gray-900">Create New Job</h1>
+          <h1 className="mt-2 text-3xl sm:text-4xl font-bold text-gray-900">Create New Job</h1>
           <p className="mt-2 text-gray-600">
             Fill out the details below to submit a new service request.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="title" className="mb-2 block text-sm font-medium text-gray-700">
-              Title
+            <label htmlFor="title" className="mb-2 block text-sm font-semibold text-gray-700">
+              Title *
             </label>
             <input
               id="title"
               type="text"
               name="title"
-              placeholder="Title"
+              placeholder="Enter job title"
               value={formData.title}
               onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
 
           <div>
-            <label htmlFor="description" className="mb-2 block text-sm font-medium text-gray-700">
-              Description
+            <label htmlFor="description" className="mb-2 block text-sm font-semibold text-gray-700">
+              Description *
             </label>
             <textarea
               id="description"
               name="description"
-              placeholder="Description"
+              placeholder="Describe the service request in detail"
               value={formData.description}
               onChange={handleChange}
               rows="5"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="category" className="mb-2 block text-sm font-medium text-gray-700">
+              <label htmlFor="category" className="mb-2 block text-sm font-semibold text-gray-700">
                 Category
               </label>
               <input
                 id="category"
                 type="text"
                 name="category"
-                placeholder="Category"
+                placeholder="e.g., Plumbing"
                 value={formData.category}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
               />
             </div>
 
             <div>
-              <label htmlFor="location" className="mb-2 block text-sm font-medium text-gray-700">
+              <label htmlFor="location" className="mb-2 block text-sm font-semibold text-gray-700">
                 Location
               </label>
               <input
                 id="location"
                 type="text"
                 name="location"
-                placeholder="Location"
+                placeholder="Service location"
                 value={formData.location}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
               />
             </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="contactName" className="mb-2 block text-sm font-medium text-gray-700">
+              <label htmlFor="contactName" className="mb-2 block text-sm font-semibold text-gray-700">
                 Contact Name
               </label>
               <input
                 id="contactName"
                 type="text"
                 name="contactName"
-                placeholder="Contact Name"
+                placeholder="Your name"
                 value={formData.contactName}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
               />
             </div>
 
             <div>
-              <label htmlFor="contactEmail" className="mb-2 block text-sm font-medium text-gray-700">
+              <label htmlFor="contactEmail" className="mb-2 block text-sm font-semibold text-gray-700">
                 Contact Email
               </label>
               <input
                 id="contactEmail"
                 type="email"
                 name="contactEmail"
-                placeholder="Contact Email"
+                placeholder="your@email.com"
                 value={formData.contactEmail}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center rounded-lg bg-black px-6 py-3 font-medium text-white transition hover:bg-gray-800"
+            className="w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white shadow-md mt-6"
           >
             Create Job
           </button>
+
+          <a
+            href="/"
+            className="block text-center text-sm text-gray-600 mt-3"
+          >
+            ← Back to Home
+          </a>
         </form>
       </div>
     </main>
