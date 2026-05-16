@@ -15,6 +15,24 @@ const getJobs = async (req, res) => {
       filter.status = req.query.status;
     }
 
+    // keyword search (title, description)
+    if (req.query.search) {
+      filter.$or = [
+        {
+          title: {
+            $regex: req.query.search,
+            $options: "i"
+          }
+        },
+        {
+          description: {
+            $regex: req.query.search,
+            $options: "i"
+          }
+        }
+      ];
+    }
+
     const jobs = await Job.find(filter);
 
     res.status(200).json(jobs);

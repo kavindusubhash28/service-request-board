@@ -8,14 +8,19 @@ export default function Home() {
 
   const [jobs, setJobs] = useState([]);
   const [category, setCategory] = useState("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
 
     const fetchJobs = async () => {
       try {
-        const response = await API.get(
-          `/jobs?category=${category}`
-        );
+        // build query params
+        const params = [];
+        if (category) params.push(`category=${encodeURIComponent(category)}`);
+        if (search) params.push(`search=${encodeURIComponent(search)}`);
+        const query = params.length ? `?${params.join("&")}` : "";
+
+        const response = await API.get(`/jobs${query}`);
         setJobs(response.data);
       } catch (error) {
         console.log(error);
@@ -24,7 +29,7 @@ export default function Home() {
 
     fetchJobs();
 
-  }, [category]);
+  }, [category, search]);
 
   return (
     <main className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
@@ -59,6 +64,14 @@ export default function Home() {
               <option value="Painting">Painting</option>
               <option value="Joinery">Joinery</option>
             </select>
+
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search jobs..."
+              className="ml-3 w-80 max-w-full rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
 
           {jobs.length === 0 ? (
