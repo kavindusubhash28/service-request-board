@@ -12,6 +12,8 @@ export default function CreateJob() {
     contactName: "",
     contactEmail: ""
   });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -22,11 +24,13 @@ export default function CreateJob() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+    setSuccessMessage("");
 
     try {
       await API.post("/jobs", formData);
 
-      alert("Job created successfully!");
+      setSuccessMessage("Job created successfully!");
 
       setFormData({
         title: "",
@@ -38,7 +42,15 @@ export default function CreateJob() {
       });
     } catch (error) {
       console.log(error);
-      alert("Error creating job");
+
+      const responseMessage = error?.response?.data?.message;
+
+      if (error?.response?.status === 401) {
+        setErrorMessage(responseMessage || "You are not authorized to create a job request.");
+        return;
+      }
+
+      setErrorMessage(responseMessage || "Error creating job");
     }
   };
 
@@ -54,6 +66,18 @@ export default function CreateJob() {
             Fill out the details below to submit a new service request.
           </p>
         </div>
+
+        {errorMessage && (
+          <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+            {errorMessage}
+          </div>
+        )}
+
+        {successMessage && (
+          <div className="mb-5 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
+            {successMessage}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
