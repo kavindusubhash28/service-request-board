@@ -85,17 +85,15 @@ export default function Home() {
             </div>
           </div>
 
-          {isLoggedIn && (
-            <div className="mb-6">
-              <a
-                href="/create-job"
-                className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md"
-              >
-                <span>+</span>
-                <span>Create New Job</span>
-              </a>
-            </div>
-          )}
+          <div className="mb-6">
+            <a
+              href="/create-job"
+              className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md"
+            >
+              <span>+</span>
+              <span>Create New Job</span>
+            </a>
+          </div>
         </header>
 
         <section>
