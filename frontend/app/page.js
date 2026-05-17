@@ -9,6 +9,18 @@ export default function Home() {
   const [jobs, setJobs] = useState([]);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const syncAuthState = () => {
+      setIsLoggedIn(Boolean(localStorage.getItem("token")));
+    };
+
+    syncAuthState();
+    window.addEventListener("storage", syncAuthState);
+
+    return () => window.removeEventListener("storage", syncAuthState);
+  }, []);
 
   useEffect(() => {
 
@@ -35,18 +47,55 @@ export default function Home() {
     <main className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-5xl mx-auto">
         <header className="mb-10">
-          <div className="mb-6">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2">Service Request Board</h1>
-            <p className="text-gray-600 dark:text-gray-400">Track and manage service requests quickly.</p>
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between mb-6">
+            <div>
+              <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2">Service Request Board</h1>
+              <p className="text-gray-600 dark:text-gray-400">Track and manage service requests quickly.</p>
+            </div>
+
+            <div className="flex items-center gap-3 sm:justify-end">
+              {isLoggedIn ? (
+                <button
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    setIsLoggedIn(false);
+                    alert("Logged out");
+                  }}
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <a
+                    href="/register"
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                  >
+                    Register
+                  </a>
+
+                  <a
+                    href="/login"
+                    className="bg-green-500 text-white px-4 py-2 rounded"
+                  >
+                    Login
+                  </a>
+                </>
+              )}
+            </div>
           </div>
 
-          <a
-            href="/create-job"
-            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md"
-          >
-            <span>+</span>
-            <span>Create New Job</span>
-          </a>
+          {isLoggedIn && (
+            <div className="mb-6">
+              <a
+                href="/create-job"
+                className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md"
+              >
+                <span>+</span>
+                <span>Create New Job</span>
+              </a>
+            </div>
+          )}
         </header>
 
         <section>

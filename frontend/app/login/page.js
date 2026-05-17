@@ -25,7 +25,6 @@ export default function LoginPage() {
     try {
       const response = await API.post("/auth/login", formData);
 
-      // Save token for authenticated requests.
       localStorage.setItem("token", response.data.token);
 
       alert("Login successful");

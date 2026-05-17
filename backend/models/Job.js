@@ -9,7 +9,7 @@ const jobSchema = new mongoose.Schema(
     contactName: String,
     contactEmail: {
       type: String,
-      match: /.+\@.+\..+/ // email validation
+      match: /.+\@.+\..+/ 
     },
     status: {
       type: String,
